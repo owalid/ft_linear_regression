@@ -2,9 +2,21 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import math
+plt.rcParams['figure.figsize'] = (12.0, 9.0)
 
-def predict(x):
-   return slope * x + intercept
+def estimate_price(theta, X):
+  return theta[0] + (theta[1] * X)
+
+def gradient_descent(X, y, theta, learning_rate, iterations):
+  m = len(y)
+
+  i = 0
+  while i < iterations:
+    theta[0] -= learning_rate * (1 / m) * sum(estimate_price(theta, X) - y)
+    theta[1] -= learning_rate * (1 / m) * sum(X * (estimate_price(theta, X) - y))
+    i += 1
+  
+  return theta
 
 def read_csv(file):
   result = []
@@ -15,46 +27,20 @@ def read_csv(file):
   result.append(y)
   return np.array(result)
 
-
-def getSlope(x, y):
-  sx = 0
-  sy = 0
-  sxy = 0
-  sum_x = sum(x)
-  sum_y = sum(y)
-  for i in range(len(x)):
-    sx += math.pow(x[i] - sum_x, 2)
-    sy += math.pow(y[i] - sum_y, 2)
-    sxy += (x[i] - sum_x) * (y[i] - sum_y)
-
-  r = sxy / math.sqrt(sx * sy)
-  sx = math.sqrt(sx / len(x) - 1)
-  sy = math.sqrt(sy / len(y) - 1)
-  return r * sy / sx
-
-def getIntercept(slope, x, y):
-  return sum(y) - (slope * sum(x))
-
+# Get data
 data = read_csv('data.csv')
-slope = getSlope(data[0], data[1])
-intercept = getIntercept(slope, data[0], data[1])
-print(predict(23000))
 
-for i in range(len(data[0])):
-  plt.scatter(float(data[0][i]),float(data[1][i]))
+# convert array to vector
+x = data[0]
+y = data[1]
 
-x = np.linspace(0, 300000, 300000)
-y = slope * x + intercept
-plt.plot(x, y, '-r')
-plt.show()
+# matix X
+# X = np.hstack((x, np.ones(x.shape)))
 
-# y = B0 + B1x
-# Slope: B1 = sqrt(Sy / Sx)
-# intercept: B0 = sum(y) - B1 * sum(x)
+theta = [0, 0]
+final_theta = gradient_descent(x, y, theta, 0.001, 1000)
+print(final_theta)
 
-# x = km
-# y = price
-
-# Sx = sqrt(sum(x - sum(x)))
-# Sy = sqrt(sum(y - sum(y)))
-
+plt.scatter(x, y)
+plt.plot(x, estimate_price(final_theta, x), c='r')
+# plt.show()
