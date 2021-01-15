@@ -12,7 +12,7 @@ def getTheta():
     return False
 
 theta = getTheta()
-if (theta != False):
+if theta.any():
   linear_model = MyLR(theta)
   print(linear_model.estimate_price(82029))
 else:
