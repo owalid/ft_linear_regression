@@ -8,10 +8,10 @@ class MyLinearRegression():
 	Description:
 		My personnal linear regression class to fit like a boss.
 	"""
-  def __init__(self,  thetas, alpha=0.01, max_iter=10000):
+  def __init__(self,  thetas, alpha=0.01, max_iter=1000):
     self.alpha = alpha
     self.max_iter = max_iter
-    self.thetas = thetas
+    self.thetas = thetas.astype(np.float32)
 
   @staticmethod
   def mean_(x):
@@ -34,9 +34,9 @@ class MyLinearRegression():
   def std_(self, x):
     return math.sqrt(self.var_(self, x))
 
-  @staticmethod
-  def normalize_data_(self, x):
+  def z_score(self, x):
     mean = self.mean_(x)
+    # print(self.std_(self, x))
     std = self.std_(self, x)
     return (x - mean) / std
 
@@ -46,11 +46,9 @@ class MyLinearRegression():
     
   @staticmethod
   def gradient(self, x, y):
-    m = x.shape[0]
-    Xpr = self.add_intercept(x)
-    Xt = np.transpose(Xpr)
-    y_hat = self.predict_(x)
-    return (1/m) * np.dot(Xt, (y_hat - y))
+    x_pr = self.add_intercept(x)
+    m = y.shape[0]
+    return (1 / m) * np.dot(np.transpose(x_pr), (np.dot(x_pr, self.thetas) - y))
 
   # @staticmethod
   def mse_(self, y, y_hat): 
@@ -74,9 +72,9 @@ class MyLinearRegression():
     return np.sum(self.cost_elem_(x, y))
 
   def plot(self, x, y):
-    normalize_data = self.normalize_data_(self, x)
+    normalize_data = self.z_score(x)
     self.fit_(normalize_data, y)
-    plt.scatter(x, y);
+    plt.scatter(x, y, c='g')
     plt.plot(x, self.predict_(normalize_data), 'r')
     plt.show()
 

@@ -1,5 +1,11 @@
 import numpy as np
 from mylinear import MyLinearRegression as MyLR
+from utils import read_csv
+
+def minmax(x):
+  min_x = min(x)
+  max_x = max(x)
+  return (x - min_x) / (max_x - min_x)
 
 def getTheta():
   try: 
@@ -14,6 +20,9 @@ def getTheta():
 theta = getTheta()
 if theta.any():
   linear_model = MyLR(theta)
-  print(linear_model.estimate_price(82029))
+  x, y = read_csv('data.csv')
+  arr = np.append(np.array([220000]), x)
+  arr = linear_model.z_score(arr)
+  print(linear_model.estimate_price(arr[0]))
 else:
   print("No data you need to train model before")
