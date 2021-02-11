@@ -7,7 +7,7 @@ class MyLinearRegression():
 	Description:
 		My personnal linear regression class to fit like a boss.
 	"""
-  def __init__(self, thetas, cost_history=None, alpha=0.01, max_iter=1000):
+  def __init__(self, thetas, cost_history=None, alpha=0.01, max_iter=600):
     self.alpha = alpha
     self.max_iter = max_iter
     self.thetas = thetas.astype(np.float32)
@@ -47,9 +47,9 @@ class MyLinearRegression():
   def __mse_(self, y, y_hat): 
     y,  y_hat = np.array(y), np.array(y_hat)
     return np.square(np.subtract(y,y_hat)).mean()
-# End private methods
+# END PRIVATE METHODS
 
-# Public methods
+# PUBLIC METHODS
   def z_score(self, x):
     mean = self.__mean_(x)
     std = self.__std_(x)

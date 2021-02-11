@@ -1,5 +1,4 @@
 from mylinear import MyLinearRegression as MyLR
-from utils import read_csv
 import numpy as np
 import pandas as pd
 
