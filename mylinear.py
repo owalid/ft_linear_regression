@@ -40,34 +40,48 @@ class MyLinearRegression():
     m = y.shape[0]
     return (1 / m) * np.dot(np.transpose(x_pr), (np.dot(x_pr, self.thetas) - y))
 
+  def __r2score_(self, y, y_hat):
+    y_mean = self.__mean_(y)
+    return 1 - ((y_hat - y)**2).sum() / ((y - y_mean)**2).sum()
+
+  def __mse_(self, y, y_hat): 
+    y,  y_hat = np.array(y), np.array(y_hat)
+    return np.square(np.subtract(y,y_hat)).mean()
+# End private methods
+
+# Public methods
   def z_score(self, x):
     mean = self.__mean_(x)
     std = self.__std_(x)
     return (x - mean) / std
 
-  def mse_(self, y, y_hat): 
-    y,  y_hat = np.array(y), np.array(y_hat)
-    return np.square(np.subtract(y,y_hat)).mean()
-
   def fit_(self, x, y):
     for i in range(self.max_iter):
       self.thetas -= self.alpha * self.__gradient(x, y)
-      self.cost_history[i] = self.mse_(y, self.predict_(x))
+      self.cost_history[i] = self.__mse_(y, self.predict_(x))
     return self.thetas, self.cost_history
   
   def predict_(self, x):
     return np.dot(self.__add_intercept(x), self.thetas)
 
-  def plot(self, x, y, want_fit = False):
-    x_normalized = self.z_score(x)
-    if want_fit:
-      self.fit_(x_normalized, y)
-      np.savez("data_predicted", thetas=self.thetas, cost_history=self.cost_history)
-    plt.plot(range(self.max_iter), self.cost_history)
+  def plotCost(self, x, y):
+    plt.plot(range(self.max_iter), self.cost_history, 'r')
     plt.show()
+  
+  def plotRegression(self, x, y):
+    x_normalized = self.z_score(x)
     plt.scatter(x, y, c='g')
     plt.plot(x, self.predict_(x_normalized), 'r')
     plt.show()
+
+  def plot(self, x, y):
+    x_normalized = self.z_score(x)
+    self.fit_(x_normalized, y)
+    r2_score = self.__r2score_(y, self.predict_(x_normalized))
+    print("The r2 score is ", r2_score, "\n")
+    np.savez("data_predicted", thetas=self.thetas, cost_history=self.cost_history, r2_score=r2_score)
+    self.plotCost(x, y)
+    self.plotRegression(x, y)
 
   def estimate_price(self, X):
     return self.thetas[0] + (self.thetas[1] * X)
