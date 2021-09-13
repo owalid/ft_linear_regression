@@ -1,16 +1,11 @@
-from mylinear import MyLinearRegression as MyLR
+from utils.mylinear import MyLinearRegression as MyLR
 import numpy as np
 import pandas as pd
-
-def read_csv(file):
-  data = pd.read_csv(file)
-  x = np.array(data["km"]).reshape(-1,1)
-  y = np.array(data["price"]).reshape(-1,1)
-  return x, y
+from utils.utils import read_csv
 
 # Get data
-x, y = read_csv('data.csv')
+x, y = read_csv('data.csv') # get informaitons of csv
 
-linear_model = MyLR(np.array([[0.0], [0.0]]))
+linear_model = MyLR(np.array([[0.0], [0.0]])) # init theta and new instance of MyLr
 print("Start training 🚀")
-linear_model.plot(x, y)
+linear_model.plot(x, y) # plot result

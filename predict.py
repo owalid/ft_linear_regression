@@ -1,14 +1,14 @@
 import numpy as np
-from mylinear import MyLinearRegression as MyLR
-from utils import read_csv
+from utils.mylinear import MyLinearRegression as MyLR
+from utils.utils import read_csv
 
 def get_data_predicted():
   try: 
-    return np.load("data_predicted.npz")
+    return np.load("data_predicted.npz") # load result fited
   except IOError:
     return False
 
-data_predicted = get_data_predicted()
+data_predicted = get_data_predicted()  # get prediction
 if data_predicted != False:
   thetas = data_predicted["thetas"]
   cost_history = data_predicted["cost_history"]
