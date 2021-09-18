@@ -16,7 +16,8 @@ if data_predicted != False:
   linear_model = MyLR(thetas=thetas, cost_history=cost_history)
 else:
   print("Warning ! You did not train the model \nUsage:\n python train.py")
-  linear_model = MyLR(np.array([[0.0], [0.0]]))
+  linear_model = MyLR(np.array([0, 0]))
+  r2_score = 0
 
 try:
   x, y = read_csv('data.csv')
@@ -45,10 +46,10 @@ try:
     elif (number == "r2" or number == "R2" or number == "r2_score"):
       print("\nThe r2 score is ", r2_score, "\n")
     elif number.isnumeric():
+      print("\nThe price for a mileage of ", number, " is: \n")
       arr = np.append(np.array([float(number)]), x)
       arr = linear_model.z_score(arr)
-      print("\nThe price for a mileage of ", number, " is: \n")
-      print(linear_model.estimate_price(arr[0]), "\n")
+      print(linear_model.estimate_price(arr[0]), "$ \n")
     else:
       print("\n can't resolve: ", number, "🙁\n")
 
