@@ -24,12 +24,12 @@ if data_predicted != False:
     elif (number == "p" or number == "P" or number == "plot"):
       which_chart = input("\n Wich chart you want to display ? \n c or cost for cost \n r or regression for regression \n b or both for both charts \n")
       if which_chart == "c" or which_chart == "C" or which_chart == "cost":
-        linear_model.plotCost(x, y)
+        linear_model.plot_cost(x, y)
       elif which_chart == "r" or which_chart == "R" or which_chart == "regression":
-        linear_model.plotRegression(x, y)
+        linear_model.plot_regression(x, y)
       elif which_chart == "b" or which_chart == "B" or which_chart == "both":
-        linear_model.plotCost(x, y)
-        linear_model.plotRegression(x, y)
+        linear_model.plot_cost(x, y)
+        linear_model.plot_regression(x, y)
       else:
         print("\nSorry we can't display:", which_chart, " chart 🙁\n")
     elif (number == "r2" or number == "R2" or number == "r2_score"):
