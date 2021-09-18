@@ -7,5 +7,5 @@ from utils.utils import read_csv
 x, y = read_csv('data.csv') # get informaitons of csv
 
 linear_model = MyLR(np.array([[0.0], [0.0]])) # init theta and new instance of MyLr
-print("Start training 🚀")
+print("Start training !")
 linear_model.plot(x, y) # plot result
