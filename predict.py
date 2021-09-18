@@ -14,8 +14,18 @@ if data_predicted != False:
   cost_history = data_predicted["cost_history"]
   r2_score = data_predicted["r2_score"]
   linear_model = MyLR(thetas=thetas, cost_history=cost_history)
+else:
+  print("Warning ! You did not train the model \nUsage:\n python train.py")
+  linear_model = MyLR(np.array([[0.0], [0.0]]))
+
+try:
   x, y = read_csv('data.csv')
   quited = False
+except:
+  quited = True
+  print("ERROR: can't open file")
+
+try:
   while not quited:
     number = input("--------------------------------------------------------\nEnter a mileage to get a price estimate \n q or quit to quit the program \n p or plot to plot the charts\n r2 or r2_score to display the r2 score\n")
     if (number == "q" or number == "Q" or number == "quit"):
@@ -41,5 +51,10 @@ if data_predicted != False:
       print(linear_model.estimate_price(arr[0]), "\n")
     else:
       print("\n can't resolve: ", number, "🙁\n")
-else:
-  print("No data 😞 \nYou need to train model before \nUsage:\n python train.py")
+
+except EOFError: # for ctrl + c
+  print("\nBye 👋")
+  quited = True
+except KeyboardInterrupt: # for ctrl + d
+  print("\nBye 👋")
+  quited = True

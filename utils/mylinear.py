@@ -51,6 +51,7 @@ class MyLinearRegression():
 
   def __fit(self, x, y): # Fit data
     for i in range(self.max_iter):
+      # Here we don't need a temporary value because we use the __gradient function which uses the instance of the current class (self)
       self.thetas -= self.alpha * self.__gradient(x, y)
       self.cost_history[i] = self.__mse(y, self.__predict(x))
     return self.thetas, self.cost_history
@@ -66,13 +67,17 @@ class MyLinearRegression():
     return (x - mean) / std
 
   def plot_cost(self, x, y): # Plot cost function (performance of my model)
+    plt.figure("Cost function")
     plt.plot(range(self.max_iter), self.cost_history, 'r')
+    plt.title("Cost function")
     plt.show()
   
   def plot_regression(self, x, y): # Plot linear regression
     x_normalized = self.z_score(x)
+    plt.figure("Linear regression")
     plt.scatter(x, y, c='g')
     plt.plot(x, self.__predict(x_normalized), 'r')
+    plt.title("Linear regression")
     plt.show()
 
   def plot(self, x, y): # Plot cost function and linear regression
