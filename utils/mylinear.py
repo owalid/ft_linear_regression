@@ -65,7 +65,7 @@ class MyLinearRegression():
     std = self.__std_(x)
     return (x - mean) / std
 
-  def plot_cost(self, x, y): # Plot cost function
+  def plot_cost(self, x, y): # Plot cost function (performance of my model)
     plt.plot(range(self.max_iter), self.cost_history, 'r')
     plt.show()
   
