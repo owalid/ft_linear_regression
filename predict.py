@@ -49,7 +49,7 @@ try:
       print("\nThe price for a mileage of ", number, " is: \n")
       arr = np.append(np.array([float(number)]), x)
       arr = linear_model.z_score(arr)
-      print(linear_model.estimate_price(arr[0]), "$ \n")
+      print(float(linear_model.estimate_price(arr[0])), "$ \n")
     else:
       print("\n can't resolve: ", number, "🙁\n")
 
